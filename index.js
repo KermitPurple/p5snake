@@ -1,6 +1,7 @@
 const CELL_SIZE = 64;
 let grid;
 let snake;
+let fruit;
 let imgs = {};
 
 // TODO pause menu
@@ -11,6 +12,7 @@ function preload(){
     imgs.left = loadImage('images/left.png');
     imgs.right = loadImage('images/right.png');
     imgs.straight = loadImage('images/straight.png');
+    imgs.fruit = loadImage('images/fruit.png');
 }
 
 function setup(){
@@ -18,6 +20,7 @@ function setup(){
     createCanvas(size.x, size.y);
     grid = new Grid(CELL_SIZE);
     snake = new Snake(grid.getCenter())
+    newFruit();
     angleMode(DEGREES);
     imageMode(CENTER);
     frameRate(8);
@@ -33,6 +36,7 @@ function draw(){
     background(0);
     update();
     drawSnake();
+    drawFruit();
 }
 
 function calcCanvasSize(cellSize){
@@ -49,6 +53,10 @@ function update(){
         snake.move(grid.getLooped(nextHead));
     }else{
         // TODO gameover
+    }
+    if(fruit.equals(snake.head)){
+        newFruit();
+        snake.lengthToAdd += 2;
     }
 }
 
@@ -99,6 +107,15 @@ function drawSnake(){
     }
 }
 
+function drawFruit(){
+    let f = grid.boardToScreenPos(fruit);
+    image(
+        imgs.fruit,
+        f.x + grid.cellSize / 2,
+        f.y + grid.cellSize / 2,
+    );
+}
+
 function keyPressed(){
     switch(keyCode){
         case 65: // a
@@ -122,4 +139,16 @@ function keyPressed(){
             snake.setDirection(Direction.RIGHT);
             break;
     };
+}
+
+function newFruit(){
+    let avaliable = [];
+    for(let x = 0; x < grid.size.x; x++){
+        for(let y = 0; y < grid.size.y; y++){
+            let pos = createVector(x, y);
+            if(!snake.contains(pos))
+                avaliable.push(pos);
+        }
+    }
+    fruit = random(avaliable);
 }

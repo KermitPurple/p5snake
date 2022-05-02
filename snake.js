@@ -8,7 +8,11 @@ class Snake{
     }
 
     getNextHead(){
-        return this.direction.toVector().add(this.points[0]);
+        return this.direction.toVector().add(this.head);
+    }
+
+    get head(){
+        return this.points[0];
     }
 
     contains(point){
