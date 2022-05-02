@@ -2,6 +2,7 @@ const CELL_SIZE = 64;
 let grid;
 let snake;
 let fruit;
+let score = 0;
 let imgs = {};
 
 // TODO pause menu
@@ -23,6 +24,8 @@ function setup(){
     newFruit();
     angleMode(DEGREES);
     imageMode(CENTER);
+    stroke(0);
+    fill(0);
     frameRate(10);
 }
 
@@ -37,6 +40,7 @@ function draw(){
     update();
     drawSnake();
     drawFruit();
+    drawScore();
 }
 
 function calcCanvasSize(cellSize){
@@ -56,6 +60,7 @@ function update(){
     }
     if(fruit.equals(snake.head)){
         newFruit();
+        score += 1;
         snake.lengthToAdd += 2;
     }
 }
@@ -114,6 +119,12 @@ function drawFruit(){
         f.x + grid.cellSize / 2,
         f.y + grid.cellSize / 2,
     );
+}
+
+function drawScore(){
+    fill(255);
+    textSize(20);
+    text(`Score: ${score}`, 5, 25);
 }
 
 function keyPressed(){
