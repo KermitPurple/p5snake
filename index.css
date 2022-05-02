@@ -11,3 +11,15 @@ body{
     justify-content: center;
     align-items: center;
 }
+
+#menu{
+    position: absolute;
+    background: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.hidden{
+    display: none;
+}
+

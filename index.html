@@ -11,5 +11,12 @@
         <script src="index.js" defer></script>
     </head>
     <body class="flex-center">
+        <div id="menu">
+            <h2>p5 Snake</h2>
+            <button onclick="play()">Play</button>
+            <br>
+            <label for="loopable-walls" >Loopable Walls</label>
+            <input type="checkbox" name="loopable-walls" id="loopable-walls" onclick="grid.loopableWalls = this.checked">
+        </div>
     </body>
 </html>

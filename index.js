@@ -2,8 +2,14 @@ const CELL_SIZE = 64;
 let grid;
 let snake;
 let fruit;
-let score = 0;
+let score;
 let imgs = {};
+let paused = false;
+let running = false;
+let els = {
+    'menu': document.querySelector('#menu'),
+    'loopable': document.querySelector('#loopable-walls'),
+};
 
 // TODO pause menu
 
@@ -19,14 +25,13 @@ function preload(){
 function setup(){
     let size = calcCanvasSize(CELL_SIZE);
     createCanvas(size.x, size.y);
-    grid = new Grid(CELL_SIZE);
-    snake = new Snake(grid.getCenter())
-    newFruit();
+    reset();
     angleMode(DEGREES);
     imageMode(CENTER);
     stroke(0);
     fill(0);
     frameRate(10);
+    noLoop();
 }
 
 function windowResized(){
@@ -56,7 +61,8 @@ function update(){
     if((grid.inBounds(nextHead) || grid.loopableWalls) && !collideWithTail){
         snake.move(grid.getLooped(nextHead));
     }else{
-        // TODO gameover
+        gameOver();
+        return;
     }
     if(fruit.equals(snake.head)){
         newFruit();
@@ -149,6 +155,9 @@ function keyPressed(){
         case RIGHT_ARROW:
             snake.queueDirection(Direction.RIGHT);
             break;
+        case 80:
+            pause();
+            break;
     };
 }
 
@@ -162,4 +171,40 @@ function newFruit(){
         }
     }
     fruit = random(avaliable);
+}
+
+function play(){
+    if(!running){
+        running = true;
+        reset();
+        loop();
+        els.menu.classList.add('hidden');
+    }else{
+        pause();
+    }
+}
+
+function pause(){
+    if(!running) return;
+    paused = !paused;
+    if(paused){
+        noLoop();
+        els.menu.classList.remove('hidden');
+    }else{
+        loop();
+        els.menu.classList.add('hidden');
+    }
+};
+
+function gameOver(){
+    running = false;
+    noLoop();
+    els.menu.classList.remove('hidden');
+}
+
+function reset(){
+    grid = new Grid(CELL_SIZE, els.loopable.checked);
+    snake = new Snake(grid.getCenter())
+    newFruit();
+    score = 0;
 }
