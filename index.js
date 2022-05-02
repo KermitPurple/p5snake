@@ -23,7 +23,7 @@ function setup(){
     newFruit();
     angleMode(DEGREES);
     imageMode(CENTER);
-    frameRate(8);
+    frameRate(10);
 }
 
 function windowResized(){
@@ -121,22 +121,22 @@ function keyPressed(){
         case 65: // a
         case 72: // h
         case LEFT_ARROW:
-            snake.setDirection(Direction.LEFT);
+            snake.queueDirection(Direction.LEFT);
             break;
         case 87: // w
         case 75: // k
         case UP_ARROW:
-            snake.setDirection(Direction.UP);
+            snake.queueDirection(Direction.UP);
             break;
         case 83: //s
         case 74: // j
         case DOWN_ARROW:
-            snake.setDirection(Direction.DOWN);
+            snake.queueDirection(Direction.DOWN);
             break;
         case 68: // d
         case 76: // l
         case RIGHT_ARROW:
-            snake.setDirection(Direction.RIGHT);
+            snake.queueDirection(Direction.RIGHT);
             break;
     };
 }

@@ -2,12 +2,14 @@ class Snake{
     constructor(head, lengthToAdd = 3, direction = Direction.UP){
         this.points = [head];
         this.lengthToAdd = 3;
-        this.direction = direction;
-        this.directions = [this.direction];
-        this.input_buffer
+        this._direction = direction;
+        this.directions = [direction];
+        this.input_buffer = [];
     }
 
     getNextHead(){
+        if(this.input_buffer.length !== 0)
+            this.direction = this.input_buffer.shift();
         return this.direction.toVector().add(this.head);
     }
 
@@ -32,8 +34,16 @@ class Snake{
         }
     }
 
-    setDirection(direction){
+    get direction(){
+        return this._direction
+    }
+
+    set direction(direction){
         if(direction !== this.direction.opposite())
-            this.direction = direction;
+            this._direction = direction;
+    }
+
+    queueDirection(direction){
+        this.input_buffer.push(direction);
     }
 }
