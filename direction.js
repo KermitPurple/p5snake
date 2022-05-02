@@ -9,21 +9,21 @@ class  Direction{
     }
 
     toVector(){
-        switch(this.direction){
-            case this.UP: return createVector(0, -1);
-            case this.DOWN: return createVector(0, 1);
-            case this.LEFT: return createVector(-1, 0);
-            case this.RIGHT: return createVector(1, 0);
+        switch(this){
+            case Direction.UP: return createVector(0, -1);
+            case Direction.DOWN: return createVector(0, 1);
+            case Direction.LEFT: return createVector(-1, 0);
+            case Direction.RIGHT: return createVector(1, 0);
             default: return null;
         };
     }
 
     opposite(){
-        switch(this.direction){
-            case this.UP: return this.DOWN;
-            case this.DOWN: return this.UP;
-            case this.LEFT: return this.RIGHT;
-            case this.RIGHT: return this.LEFT;
+        switch(this){
+            case Direction.UP: return Direction.DOWN;
+            case Direction.DOWN: return Direction.UP;
+            case Direction.LEFT: return Direction.RIGHT;
+            case Direction.RIGHT: return Direction.LEFT;
             default: return null;
         };
     }
